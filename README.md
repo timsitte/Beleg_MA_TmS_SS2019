@@ -3,4 +3,4 @@
 # Benutzte Komponenten  
 - Raspberry Pi 3  
 - Himalaya HIMO-01P  
-. SMA-Antenne  
+- SMA-Antenne  
