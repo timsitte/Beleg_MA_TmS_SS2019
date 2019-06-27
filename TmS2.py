@@ -26,7 +26,7 @@ def output():
     op = "".encode()
     while ser.inWaiting() > 0:
         op+=ser.read(1)
-    time.sleep(0.1)
+    time.sleep(1)
     return op.decode('UTF-8')
 
 #broadcast your existence every 15 seconds
@@ -38,7 +38,7 @@ def broadcast():
         time.sleep(1)
         ser.write(("{0}\r\n".format(bc)).encode("UTF-8"))
         print("Broadcast {0}".format(bc))
-        time.sleep(15)
+        time.sleep(60)
 
 #send a message to every device in the table
 def write():
@@ -47,9 +47,9 @@ def write():
         for i in table:
             print("Writing {0}".format(table[i]))
             ser.write(str.encode("AT+DEST={0}\r\n".format(table[i])))
-            time.sleep(0.1)
+            time.sleep(1)
             ser.write(str.encode("AT+SEND={0}\r\n".format(len(msg))))
-            time.sleep(0.1)
+            time.sleep(1)
             ser.write(str.encode("{0}\r\n".format(msg)))
             print("Write {0}".format(msg))
             time.sleep(1)
@@ -62,7 +62,7 @@ def listen():
         if answer != "":
             print("Listen: {0}".format(answer))
             if "RTI" in answer:
-                muh = answer.split(",")
+                muh = answer.split(",") #LR,XXXX,03,RTI 
                 if muh[1] not in table:
                     table.append(muh[1])
                     print("New entry: ")
@@ -99,9 +99,9 @@ while 1:
         print("Your message...:")
         message = input()
         ser.write(str.encode("AT+DEST={0}\r\n".format(eingabe)))
-        time.sleep(0.1)
+        time.sleep(1)
         ser.write(str.encode("AT+SEND={0}\r\n".format(len(message))))
-        time.sleep(0.1)
+        time.sleep(1)
         ser.write(str.encode("{0}\r\n".format(message)))
     #to close/end the program
     elif eingabe == "exit":
